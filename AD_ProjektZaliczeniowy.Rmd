@@ -5,6 +5,12 @@ date: "27 czerwca 2018"
 output: html_document
 ---
 
+## Zestaw danych
+<p> Do realizacji poszczególnych zadań projektu zostanie wykorzystany zbiór "Adult".
+Zbiór ten został opracowany przez  i udostępniony </p>
+
+<p> Opis zmiennych zestawu danych Adult </p>
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
