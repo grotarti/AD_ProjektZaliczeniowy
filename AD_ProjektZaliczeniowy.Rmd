@@ -6,14 +6,29 @@ output: html_document
 ---
 
 ## Zestaw danych
-<p> Do realizacji poszczególnych zadań projektu zostanie wykorzystany zbiór "Adult".
-Zbiór ten został opracowany przez  i udostępniony </p>
+Do realizacji poszczególnych zadań projektu zostanie wykorzystany zbiór *Adult*, który udostępniony został przez [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets/Adult).
 
-<p> Opis zmiennych zestawu danych Adult </p>
+### Opis
+The Adult data set was extracted in 1994 from census data of the United States. It contains continuous and nominal attributes, describing some social information (age, race, sex, marital status, ...) about the citizens registered.
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+The task is to predict whether the citizen's income exceeds fifty thousand dollars a year.
+
+### Charakterystyka
+* Typ: Klasyfikacja (Classification);	
+* Pochodzenie: Swiat rzeczywisty;
+* Liczba prób: 45222 (48842);
+* Liczba cech (zmiennych):	14;
+* Liczba klas: 2;
+* Brakujące wartości:	Tak.
+
+
+### Opis zmiennych
+Zestaw danych Adult posiada 14 zmiennych.
+
+1. Age: continous;  
+2. worklass: Private, Self-emp-not-inc, Self-emp-inc, Federal-gov, Local-gov, State-gov, Without-pay, Never-worked;
+3. fnlwgt: continuous; 
+
 
 ## R Markdown
 
