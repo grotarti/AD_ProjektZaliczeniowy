@@ -5,15 +5,14 @@ date: "27 czerwca 2018"
 output: html_document
 ---
 
-## Zestaw danych
-Do realizacji poszczególnych zadań projektu zostanie wykorzystany zbiór *Adult*, który udostępniony został przez [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets/Adult).
+## 1. Zestaw danych
+Do realizacji poszczególnych zadań projektu zostanie wykorzystany zbiór **Adult**, który udostępniony został przez **[UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets/Adult)**.
 
-### Opis
-The Adult data set was extracted in 1994 from census data of the United States. It contains continuous and nominal attributes, describing some social information (age, race, sex, marital status, ...) about the citizens registered.
+### 1.1 Opis
+Zestaw danych **Adult** został wyodrębniony w 1994 roku z danych spisu powszechnego w Stanach Zjednoczonych.
+Zawiera atrybuty ciągłe i nominalne, opisujące niektóre informacje społeczne (wiek, rasa, płeć, stan cywilny, ...) dotyczące zarejestrowanych obywateli.
 
-The task is to predict whether the citizen's income exceeds fifty thousand dollars a year.
-
-### Charakterystyka
+### 1.2 Charakterystyka
 * Typ: Klasyfikacja (Classification);	
 * Pochodzenie: Swiat rzeczywisty;
 * Liczba prób: 45222 (48842);
@@ -21,14 +20,19 @@ The task is to predict whether the citizen's income exceeds fifty thousand dolla
 * Liczba klas: 2;
 * Brakujące wartości:	Tak.
 
-
-### Opis zmiennych
+### 1.3 Opis zmiennych
 Zestaw danych Adult posiada 14 zmiennych.
 
-1. Age: continous;  
-2. worklass: Private, Self-emp-not-inc, Self-emp-inc, Federal-gov, Local-gov, State-gov, Without-pay, Never-worked;
-3. fnlwgt: continuous; 
+1. Age: [17.0, 90.0];  
+2. Worklass: {Private, Self-emp-not-inc, Self-emp-inc, Federal-gov, Local-gov, State-gov, Without-pay, Never-worked};
+3. Fnlwgt: [12285.0, 1490400.0];
+4. Education: {Bachelors, Some-college, 11th, HS-grad, Prof-school, Assoc-acdm, Assoc-voc, 9th, 7th-8th, 12th, Masters, 1st-4th, 10th, Doctorate, 5th-6th, Preschool};
+5. Education-num: [1.0, 16.0];
+6. Marital-status: {Married-civ-spouse, Divorced, Never-married, Separated, Widowed, Married-spouse-absent, Married-AF-spouse};
+7. Occupation: {Tech-support, Craft-repair, Other-service, Sales, Exec-managerial, Prof-specialty, Handlers-cleaners, Machine-op-inspct, Adm-clerical, Farming-fishing, Transport-moving, Priv-house-serv, Protective-serv, Armed-Forces};
 
+
+**Zadanie polega na przewidywaniu, czy dochód obywatela przekracza pięćdziesiąt tysięcy dolarów rocznie.**
 
 ## R Markdown
 
@@ -36,9 +40,20 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-```{r cars}
-summary(cars)
+```{r wczytanie zbioru}
+adult <- read.csv2('adult.csv', header = TRUE, sep = ";")
 ```
+
+Prezentacja struktury zbioru danych
+```{r struktura zbioru}
+str(adult)
+```
+
+Prezentacja podsumowania zbioru danych
+```{r podsumowanie zbioru}
+summary(adult)
+```
+
 
 ## Including Plots
 

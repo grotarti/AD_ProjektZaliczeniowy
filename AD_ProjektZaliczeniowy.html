@@ -129,15 +129,14 @@ $(document).ready(function () {
 
 
 <div id="zestaw-danych" class="section level2">
-<h2>Zestaw danych</h2>
-<p>Do realizacji poszczególnych zadań projektu zostanie wykorzystany zbiór <em>Adult</em>, który udostępniony został przez <a href="http://archive.ics.uci.edu/ml/datasets/Adult">UCI Machine Learning Repository</a>.</p>
+<h2>1. Zestaw danych</h2>
+<p>Do realizacji poszczególnych zadań projektu zostanie wykorzystany zbiór <strong>Adult</strong>, który udostępniony został przez <strong><a href="http://archive.ics.uci.edu/ml/datasets/Adult">UCI Machine Learning Repository</a></strong>.</p>
 <div id="opis" class="section level3">
-<h3>Opis</h3>
-<p>The Adult data set was extracted in 1994 from census data of the United States. It contains continuous and nominal attributes, describing some social information (age, race, sex, marital status, …) about the citizens registered.</p>
-<p>The task is to predict whether the citizen’s income exceeds fifty thousand dollars a year.</p>
+<h3>1.1 Opis</h3>
+<p>Zestaw danych <strong>Adult</strong> został wyodrębniony w 1994 roku z danych spisu powszechnego w Stanach Zjednoczonych. Zawiera atrybuty ciągłe i nominalne, opisujące niektóre informacje społeczne (wiek, rasa, płeć, stan cywilny, …) dotyczące zarejestrowanych obywateli.</p>
 </div>
 <div id="charakterystyka" class="section level3">
-<h3>Charakterystyka</h3>
+<h3>1.2 Charakterystyka</h3>
 <ul>
 <li>Typ: Klasyfikacja (Classification);<br />
 </li>
@@ -149,28 +148,86 @@ $(document).ready(function () {
 </ul>
 </div>
 <div id="opis-zmiennych" class="section level3">
-<h3>Opis zmiennych</h3>
+<h3>1.3 Opis zmiennych</h3>
 <p>Zestaw danych Adult posiada 14 zmiennych.</p>
 <ol style="list-style-type: decimal">
-<li>Age: continous;<br />
+<li>Age: [17.0, 90.0];<br />
 </li>
-<li>worklass: Private, Self-emp-not-inc, Self-emp-inc, Federal-gov, Local-gov, State-gov, Without-pay, Never-worked;</li>
-<li>fnlwgt: continuous;</li>
+<li>Worklass: {Private, Self-emp-not-inc, Self-emp-inc, Federal-gov, Local-gov, State-gov, Without-pay, Never-worked};</li>
+<li>Fnlwgt: [12285.0, 1490400.0];</li>
+<li>Education: {Bachelors, Some-college, 11th, HS-grad, Prof-school, Assoc-acdm, Assoc-voc, 9th, 7th-8th, 12th, Masters, 1st-4th, 10th, Doctorate, 5th-6th, Preschool};</li>
+<li>Education-num: [1.0, 16.0];</li>
+<li>Marital-status: {Married-civ-spouse, Divorced, Never-married, Separated, Widowed, Married-spouse-absent, Married-AF-spouse};</li>
+<li>Occupation: {Tech-support, Craft-repair, Other-service, Sales, Exec-managerial, Prof-specialty, Handlers-cleaners, Machine-op-inspct, Adm-clerical, Farming-fishing, Transport-moving, Priv-house-serv, Protective-serv, Armed-Forces};</li>
 </ol>
+<p><strong>Zadanie polega na przewidywaniu, czy dochód obywatela przekracza pięćdziesiąt tysięcy dolarów rocznie.</strong></p>
 </div>
 </div>
 <div id="r-markdown" class="section level2">
 <h2>R Markdown</h2>
 <p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
 <p>When you click the <strong>Knit</strong> button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
-<pre class="r"><code>summary(cars)</code></pre>
-<pre><code>##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00</code></pre>
+<pre class="r"><code>adult &lt;- read.csv2('adult.csv', header = TRUE, sep = &quot;;&quot;)</code></pre>
+<p>Prezentacja struktury zbioru danych</p>
+<pre class="r"><code>str(adult)</code></pre>
+<pre><code>## 'data.frame':    48842 obs. of  15 variables:
+##  $ Age           : int  25 38 28 44 18 34 29 63 24 55 ...
+##  $ Workclass     : Factor w/ 9 levels &quot;?&quot;,&quot;Federal-gov&quot;,..: 5 5 3 5 1 5 1 7 5 5 ...
+##  $ Fnlwgt        : int  226802 89814 336951 160323 103497 198693 227026 104626 369667 104996 ...
+##  $ Education     : Factor w/ 16 levels &quot;10th&quot;,&quot;11th&quot;,..: 2 12 8 16 16 1 12 15 16 6 ...
+##  $ Education.num : int  7 9 12 10 10 6 9 15 10 4 ...
+##  $ Marital.status: Factor w/ 7 levels &quot;Divorced&quot;,&quot;Married-AF-spouse&quot;,..: 5 3 3 3 5 5 5 3 5 3 ...
+##  $ Occupation    : Factor w/ 15 levels &quot;?&quot;,&quot;Adm-clerical&quot;,..: 8 6 12 8 1 9 1 11 9 4 ...
+##  $ Relationship  : Factor w/ 6 levels &quot;Husband&quot;,&quot;Not-in-family&quot;,..: 4 1 1 1 4 2 5 1 5 1 ...
+##  $ Race          : Factor w/ 5 levels &quot;Amer-Indian-Eskimo&quot;,..: 3 5 5 3 5 5 3 5 5 5 ...
+##  $ Sex           : Factor w/ 2 levels &quot;Female&quot;,&quot;Male&quot;: 2 2 2 2 1 2 2 2 1 2 ...
+##  $ Capital.gain  : int  0 0 0 7688 0 0 0 3103 0 0 ...
+##  $ Capital.loss  : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ Hours.per.week: int  40 50 40 40 30 30 40 32 40 10 ...
+##  $ Native.country: Factor w/ 42 levels &quot;?&quot;,&quot;Cambodia&quot;,..: 40 40 40 40 40 40 40 40 40 40 ...
+##  $ SalaryClass   : Factor w/ 2 levels &quot;&lt;=50K&quot;,&quot;&gt;50K&quot;: 1 1 2 2 1 1 1 2 1 1 ...</code></pre>
+<p>Prezentacja podsumowania zbioru danych</p>
+<pre class="r"><code>summary(adult)</code></pre>
+<pre><code>##       Age                   Workclass         Fnlwgt       
+##  Min.   :17.00   Private         :33906   Min.   :  12285  
+##  1st Qu.:28.00   Self-emp-not-inc: 3862   1st Qu.: 117551  
+##  Median :37.00   Local-gov       : 3136   Median : 178145  
+##  Mean   :38.64   ?               : 2799   Mean   : 189664  
+##  3rd Qu.:48.00   State-gov       : 1981   3rd Qu.: 237642  
+##  Max.   :90.00   Self-emp-inc    : 1695   Max.   :1490400  
+##                  (Other)         : 1463                    
+##         Education     Education.num                 Marital.status 
+##  HS-grad     :15784   Min.   : 1.00   Divorced             : 6633  
+##  Some-college:10878   1st Qu.: 9.00   Married-AF-spouse    :   37  
+##  Bachelors   : 8025   Median :10.00   Married-civ-spouse   :22379  
+##  Masters     : 2657   Mean   :10.08   Married-spouse-absent:  628  
+##  Assoc-voc   : 2061   3rd Qu.:12.00   Never-married        :16117  
+##  11th        : 1812   Max.   :16.00   Separated            : 1530  
+##  (Other)     : 7625                   Widowed              : 1518  
+##            Occupation            Relationship                   Race      
+##  Prof-specialty : 6172   Husband       :19716   Amer-Indian-Eskimo:  470  
+##  Craft-repair   : 6112   Not-in-family :12583   Asian-Pac-Islander: 1519  
+##  Exec-managerial: 6086   Other-relative: 1506   Black             : 4685  
+##  Adm-clerical   : 5611   Own-child     : 7581   Other             :  406  
+##  Sales          : 5504   Unmarried     : 5125   White             :41762  
+##  Other-service  : 4923   Wife          : 2331                             
+##  (Other)        :14434                                                    
+##      Sex         Capital.gain    Capital.loss    Hours.per.week 
+##  Female:16192   Min.   :    0   Min.   :   0.0   Min.   : 1.00  
+##  Male  :32650   1st Qu.:    0   1st Qu.:   0.0   1st Qu.:40.00  
+##                 Median :    0   Median :   0.0   Median :40.00  
+##                 Mean   : 1079   Mean   :  87.5   Mean   :40.42  
+##                 3rd Qu.:    0   3rd Qu.:   0.0   3rd Qu.:45.00  
+##                 Max.   :99999   Max.   :4356.0   Max.   :99.00  
+##                                                                 
+##        Native.country  SalaryClass  
+##  United-States:43832   &lt;=50K:37155  
+##  Mexico       :  951   &gt;50K :11687  
+##  ?            :  857                
+##  Philippines  :  295                
+##  Germany      :  206                
+##  Puerto-Rico  :  184                
+##  (Other)      : 2517</code></pre>
 </div>
 <div id="including-plots" class="section level2">
 <h2>Including Plots</h2>
