@@ -4,23 +4,32 @@ author: "A. Grotowski, M. Mądrawski. S. Węgorzewski"
 date: "27 czerwca 2018"
 output: html_document
 ---
+<hr>
 
-### 1. Zestaw danych
-Do realizacji poszczególnych zadań projektu zostanie wykorzystany zbiór **Adult**, który udostępniony został przez **[UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets/Adult)**.
+### Źródło zbioru danych 
+**[UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets/Adult)**
+<br>
+*Zbiór:* **Adult** - dostępny pod adresem <http://archive.ics.uci.edu/ml/datasets/Adult>.
+<br>
+*Zmienna zależna:* **Class** 
+<br>
 
-#### 1.1. Opis
-Zestaw danych **Adult** został wyodrębniony w 1994 roku z danych spisu powszechnego w Stanach Zjednoczonych.
-Zawiera atrybuty ciągłe i nominalne, opisujące niektóre informacje społeczne (wiek, rasa, płeć, stan cywilny, ...) dotyczące zarejestrowanych obywateli.
+---
 
-#### 1.2. Charakterystyka
+## I. Opis zbioru
+### 1. Dane<br>
+Zestaw danych **Adult** został wyodrębniony w 1994 roku z danych spisu powszechnego w Stanach Zjednoczonych. 
+Zawiera atrybuty ciągłe i nominalne, opisujące niektóre informacje społeczne (wiek, rasa, płeć, stan cywilny, …) dotyczące zarejestrowanych obywateli.
+
+### 2. Charakterystyka
 * Typ: Klasyfikacja (Classification);	
 * Pochodzenie: Swiat rzeczywisty;
 * Liczba prób: 45222 (48842);
 * Liczba cech (zmiennych):	14;
 * Liczba klas: 2;
-* Brakujące wartości:	Tak.
+* Brakujące wartościci:	Tak.
 
-#### 1.3. Opis zmiennych
+### 3. Opis zmiennych
 Zestaw danych Adult posiada 14 zmiennych wejściowych (niezależnych) i 1 zmienną wyjściową (zależną).
 
 **Zmienne wejściowe (niezależne):**
@@ -35,24 +44,23 @@ Zestaw danych Adult posiada 14 zmiennych wejściowych (niezależnych) i 1 zmienn
 8. Relationship: {Wife, Own-child, Husband, Not-in-family, Other-relative, Unmarried};
 9. Race: {White, Asian-Pac-Islander, Amer-Indian-Eskimo, Other, Black};
 10. Sex: {Female, Male};
-11. Capital-gain: [0.0, 99999.0];
-12. Capital-loss: [0.0, 4356.0];
-13. Hours-per-week: [1.0, 99.0];
-14. Native-country: {United-States, Cambodia, England, Puerto-Rico, Canada, Germany, Outlying-US(Guam-USVI-etc), India, Japan, Greece, South, China, Cuba, Iran, Honduras, Philippines, Italy, Poland, Jamaica, Vietnam, Mexico, Portugal, Ireland, France, Dominican-Republic, Laos, Ecuador, Taiwan, Haiti, Columbia, Hungary, Guatemala, Nicaragua, Scotland, Thailand, Yugoslavia, El-Salvador, Trinadad&Tobago, Peru, Hong, Holand-Netherlands}.
+11. Capital.gain: [0.0, 99999.0];
+12. Capital.loss: [0.0, 4356.0];
+13. Hours.per.week: [1.0, 99.0];
+14. Native.country: {United-States, Cambodia, England, Puerto-Rico, Canada, Germany, Outlying-US(Guam-USVI-etc), India, Japan, Greece, South, China, Cuba, Iran, Honduras, Philippines, Italy, Poland, Jamaica, Vietnam, Mexico, Portugal, Ireland, France, Dominican-Republic, Laos, Ecuador, Taiwan, Haiti, Columbia, Hungary, Guatemala, Nicaragua, Scotland, Thailand, Yugoslavia, El-Salvador, Trinadad&Tobago, Peru, Hong, Holand-Netherlands}.
 
 **Zmienna wyjściowa (zależna):**
 
 1. SalaryClass: {>50K, <=50K}.
 
 
-#### 1.4 Cel zadania
+### 4. Cel zadania
 **Zadanie polega na przewidywaniu, czy dochód obywatela przekracza pięćdziesiąt tysięcy dolarów rocznie.**
 
 
-### 2. Przygotowanie zbioru danych
+## II. Przygotowanie zbioru danych
 
-#### 2.1. Wczytanie zbioru danych
-
+### 1. Wczytanie zbioru danych
 
 
 ```{r wczytanie zbioru}
@@ -69,11 +77,94 @@ Prezentacja podsumowania zbioru danych
 summary(adult)
 ```
 
-Wyświetlenie zbioru danych
 
-#### 2.2. Uzupełnienie brakujących wartości
-Zbiór **Adult**
+### 2. Konwersja
+Zmienne **Occupation**, **Workclass** oraz **Native-country**,  zawierają braki danych reprezentowane jako znak "?".
+Pojawianie się tego znaku powoduje zwiekszenie liczby faktorów dla poszczególnych zmiennych. Dlatego też należy zamienić znak "?" na watość "NA" (ang. *Not Available*).
 
+Konwersja znakóW "**?**" na "**NA**".
+```{r konwersja braków}
+adult[adult == "?"] <- NA
+head(is.na(adult), 5)
+```
+
+### 3. Uzupełnienie zbiorów danych
+Prezentacja informacji o brakujących danych
+```{r braki danych w formie tabelarycznej, echo=FALSE}
+sapply(adult, function(x) sum(is.na(x)))
+```
+
+```{r braki danych w formie graficznej, echo=FALSE}
+#install.packages("VIM")
+library(VIM)
+mice_plot <- aggr(adult, col=c('darkred','darkorange'),
+                    numbers=TRUE, sortVars=TRUE,
+                    labels=names(adult), cex.axis=.7,
+                    gap=3, ylab=c("Brakujące dane","Wzorzec"))
+```
+
+Braki danych dotyczą atrybutów typu factor. Została podjęta decyzcja o uzupełnieniu brakujacych danych przed podziałem zbioru na podzbiory.
+
+```{r uzupełnienie zbiorów, echo=FALSE}
+#install.packages('Hmisc')
+library(Hmisc)
+adult$Workclass <- as.factor(Hmisc::impute(adult$Workclass, median))
+adult$Occupation <- as.factor(Hmisc::impute(adult$Occupation, median))
+adult$Native.country <- as.factor(Hmisc::impute(adult$Native.country, median))
+```
+
+```{r podsumowanie po uzupełnieniu danych, echo=FALSE}
+sapply(adult, function(x) sum(is.na(x)))
+```
+
+### 4. Podział zbioru na podzbiory - 60, 20, 20
+Zbiór **Adult** został podzielony na podziory:
+
+* **adult_train** - zbiór treningowy (uczący) zawierający 60% wszystkich prób
+* **adult_test** - zbiór testowy zawierający 20% wszystkich prób
+* **adult_ver** - zbiór do weryfikacji zawierający 20% wszystkich prób
+
+```{r podział zbioru, echo=FALSE}
+library(caTools)
+split <- sample.split(adult, SplitRatio = 0.6)
+split
+adult_train <- subset(adult, split == TRUE)
+adult_tmp <- subset(adult, split == FALSE)
+split <- sample.split(adult_tmp, SplitRatio = 0.5)
+split
+adult_test <- subset(adult_tmp, split == TRUE)
+adult_ver <- subset(adult_tmp, split == FALSE)
+```
+
+
+## III. Regresja logistyczna
+
+```{r regresja logistyczna}
+model_1 <- glm(SalaryClass ~ . , data = adult_train, family = 'binomial')
+summary(model_1)
+```
+
+Ze względu na dużą ilość poziomów poszczególnych zmiennych, model regresji logistycznej nie jest adekwatny dla wykorzystywanego zbioru Adult.
+Zbiór powinien zostać odpowiednio przeprojektowany w celu zmniejszenia liczby poziomów.
+
+
+## IV. Drzewo decyzyjne
+```{r drzewo decyzyjne}
+library(rpart)
+tree.adult_model1 <- rpart(SalaryClass~., data=adult_train, minsplit=5, maxdepth=10)
+tree.adult_model1
+plot(tree.adult_model1, uniform = TRUE)
+text(tree.adult_model1, use.n = TRUE, all = TRUE, cex=.5)
+```
+
+## V. Lasy losowe
+```{r lasy losowe}
+library(randomForest)
+randomTree.adult_model1 <- randomForest(SalaryClass~., data=adult_train, ntree=100)
+randomTree.adult_model1
+plot(randomTree.adult_model1)
+#text(randomTree.adult_model1, use.n = TRUE, all = TRUE, cex=.5)
+```
 
 ## Including Plots
 
