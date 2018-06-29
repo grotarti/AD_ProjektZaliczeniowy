@@ -149,21 +149,56 @@ Zbiór powinien zostać odpowiednio przeprojektowany w celu zmniejszenia liczby 
 
 
 ## IV. Drzewo decyzyjne
-```{r drzewo decyzyjne}
+### 1. Wariant A
+
+```{r drzewo decyzyjne A}
 library(rpart)
-tree.adult_model1 <- rpart(SalaryClass~., data=adult_train, minsplit=5, maxdepth=10)
-tree.adult_model1
-plot(tree.adult_model1, uniform = TRUE)
-text(tree.adult_model1, use.n = TRUE, all = TRUE, cex=.5)
+library(rpart.plot)
+tree.adult_model_A <- rpart(SalaryClass~., data=adult_train, method = "class")
+tree.adult_model_A
+rpart.plot(tree.adult_model_A)
 ```
 
+#### 1.1 Interpretacja wyników
+Root-em drzewa jest zmienna SalaryClass przyjmująca wartość **<=50K**.
+Jeśli zmienna **Relationship** posiada przypisaną jedną z wartości: **Not-in-family**, **Other-relative**, **Own-child** lub **Unmarried** to zostanie obywatel zakwalifikowany lewej strony drzewa. Pozostali obywatle tj. będący w relacji "**Wife** znajdują się po prawej stronie pierwszego poziomu drzewa.
+Okazuje suę że 55% ludzi jest klasyfikowanych jako jeden z tych statusóW związku (lewa strona), a 54% którzy posiadają **Capital.Gain** poniżej 7074 są klasyfikowani z zbiorze jako obywatele o niskich dochodach.
+
+Drzewo wykorzystało tylko 3 z 14 dostępnych zmiennych. rpart automatycznie stosuje metodologię wyboru cech w celu wybrania niewielkiej liczby predyktorów do zbudowania drzewa.
+
+
+
 ## V. Lasy losowe
-```{r lasy losowe}
+### 1. Wariant A - 5 drzew w lesie
+```{r lasy losowe A}
 library(randomForest)
-randomTree.adult_model1 <- randomForest(SalaryClass~., data=adult_train, ntree=100)
-randomTree.adult_model1
-plot(randomTree.adult_model1)
-#text(randomTree.adult_model1, use.n = TRUE, all = TRUE, cex=.5)
+set.seed(123)
+randomTree.adult_model_A <- randomForest(SalaryClass~., data=adult_train, importance=TRUE, ntree=5)
+randomTree.adult_model_A
+
+plot(randomTree.adult_model_A)
+
+```
+
+### 2. Wariant B - 500 drzew w lesie
+```{r lasy losowe B}
+set.seed(123)
+randomTree.adult_model_B <- randomForest(SalaryClass~., data=adult_train, importance=TRUE, ntree=500)
+randomTree.adult_model_B
+
+plot(randomTree.adult_model_B)
+
+```
+
+### 3. Wariant C -1000 drzew w lesie
+```{r lasy losowe C}
+library(randomForest)
+set.seed(123)
+randomTree.adult_model_C <- randomForest(SalaryClass~., data=adult_train, importance=TRUE, ntree=1000)
+randomTree.adult_model_C
+
+plot(randomTree.adult_model_B)
+
 ```
 
 ## Including Plots
