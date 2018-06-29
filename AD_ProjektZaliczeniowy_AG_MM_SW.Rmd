@@ -1,0 +1,75 @@
+---
+title: "Analiza danych - big data i data mining <br> Projekt, semestr letni 2017/2018"
+author: "**Wykonawcy**<br>Artur Grotowski - indeks 1709<br>Mariusz Mπdrawski - indeks 14084<br>S≥awomir WÍgorzewski - indeks 17369"
+date: "27 czerwca 2018"
+output: html_document
+---
+<hr>
+
+### èrÛd≥o zbioru danych 
+**[UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets/Adult)**
+<br>
+*ZbiÛr:* **Adult** - dostÍpny pod adresem <http://archive.ics.uci.edu/ml/datasets/Adult>.
+<br>
+*Zmienna zaleøna:* **Class** 
+<br>
+
+---
+
+## A. Opis zbioru
+### 1. Dane<br>
+Zestaw danych **Adult** zosta≥ wyodrÍbniony w 1994 roku z danych spisu powszechnego w Stanach Zjednoczonych. 
+Zawiera atrybuty ciπg≥e i nominalne, opisujπce niektÛre informacje spo≥eczne (wiek, rasa, p≥eÊ, stan cywilny, Ö) dotyczπce zarejestrowanych obywateli.
+
+### 2. Charakterystyka
+* Typ: Klasyfikacja (Classification);	
+* Pochodzenie: Swiat rzeczywisty;
+* Liczba prÛb: 45222 (48842);
+* Liczba cech (zmiennych):	14;
+* Liczba klas: 2;
+* Brakujπce wartoúcici:	Tak.
+
+### 3. Opis zmiennych
+Zestaw danych Adult posiada 14 zmiennych.
+
+1. Age: [17.0, 90.0];  
+2. Worklass: {Private, Self-emp-not-inc, Self-emp-inc, Federal-gov, Local-gov, State-gov, Without-pay, Never-worked};
+3. Fnlwgt: [12285.0, 1490400.0];
+4. Education: {Bachelors, Some-college, 11th, HS-grad, Prof-school, Assoc-acdm, Assoc-voc, 9th, 7th-8th, 12th, Masters, 1st-4th, 10th, Doctorate, 5th-6th, Preschool};
+5. Education-num: [1.0, 16.0];
+6. Marital-status: {Married-civ-spouse, Divorced, Never-married, Separated, Widowed, Married-spouse-absent, Married-AF-spouse};
+7. Occupation: {Tech-support, Craft-repair, Other-service, Sales, Exec-managerial, Prof-specialty, Handlers-cleaners, Machine-op-inspct, Adm-clerical, Farming-fishing, Transport-moving, Priv-house-serv, Protective-serv, Armed-Forces};
+
+
+**Zadanie polega na przewidywaniu, czy dochÛd obywatela przekracza piÍÊdziesiπt tysiÍcy dolarÛw rocznie.**
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r wczytanie zbioru}
+adult <- read.csv2('adult.csv', header = TRUE, sep = ";")
+```
+
+Prezentacja struktury zbioru danych
+```{r struktura zbioru}
+str(adult)
+```
+
+Prezentacja podsumowania zbioru danych
+```{r podsumowanie zbioru}
+summary(adult)
+```
+
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
