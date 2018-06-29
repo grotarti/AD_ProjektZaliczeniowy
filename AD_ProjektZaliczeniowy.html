@@ -128,15 +128,20 @@ $(document).ready(function () {
 </div>
 
 
-<div id="zestaw-danych" class="section level3">
-<h3>1. Zestaw danych</h3>
-<p>Do realizacji poszczególnych zadań projektu zostanie wykorzystany zbiór <strong>Adult</strong>, który udostępniony został przez <strong><a href="http://archive.ics.uci.edu/ml/datasets/Adult">UCI Machine Learning Repository</a></strong>.</p>
-<div id="opis" class="section level4">
-<h4>1.1. Opis</h4>
+<hr>
+<div id="zrodo-zbioru-danych" class="section level3">
+<h3>Źródło zbioru danych</h3>
+<p><strong><a href="http://archive.ics.uci.edu/ml/datasets/Adult">UCI Machine Learning Repository</a></strong> <br> <em>Zbiór:</em> <strong>Adult</strong> - dostępny pod adresem <a href="http://archive.ics.uci.edu/ml/datasets/Adult" class="uri">http://archive.ics.uci.edu/ml/datasets/Adult</a>. <br> <em>Zmienna zależna:</em> <strong>Class</strong> <br></p>
+<hr />
+</div>
+<div id="i.-opis-zbioru" class="section level2">
+<h2>I. Opis zbioru</h2>
+<div id="dane" class="section level3">
+<h3>1. Dane<br></h3>
 <p>Zestaw danych <strong>Adult</strong> został wyodrębniony w 1994 roku z danych spisu powszechnego w Stanach Zjednoczonych. Zawiera atrybuty ciągłe i nominalne, opisujące niektóre informacje społeczne (wiek, rasa, płeć, stan cywilny, …) dotyczące zarejestrowanych obywateli.</p>
 </div>
-<div id="charakterystyka" class="section level4">
-<h4>1.2. Charakterystyka</h4>
+<div id="charakterystyka" class="section level3">
+<h3>2. Charakterystyka</h3>
 <ul>
 <li>Typ: Klasyfikacja (Classification);<br />
 </li>
@@ -144,11 +149,11 @@ $(document).ready(function () {
 <li>Liczba prób: 45222 (48842);</li>
 <li>Liczba cech (zmiennych): 14;</li>
 <li>Liczba klas: 2;</li>
-<li>Brakujące wartości: Tak.</li>
+<li>Brakujące wartościci: Tak.</li>
 </ul>
 </div>
-<div id="opis-zmiennych" class="section level4">
-<h4>1.3. Opis zmiennych</h4>
+<div id="opis-zmiennych" class="section level3">
+<h3>3. Opis zmiennych</h3>
 <p>Zestaw danych Adult posiada 14 zmiennych wejściowych (niezależnych) i 1 zmienną wyjściową (zależną).</p>
 <p><strong>Zmienne wejściowe (niezależne):</strong></p>
 <ol style="list-style-type: decimal">
@@ -163,23 +168,25 @@ $(document).ready(function () {
 <li>Relationship: {Wife, Own-child, Husband, Not-in-family, Other-relative, Unmarried};</li>
 <li>Race: {White, Asian-Pac-Islander, Amer-Indian-Eskimo, Other, Black};</li>
 <li>Sex: {Female, Male};</li>
-<li>Capital-gain: [0.0, 99999.0];</li>
-<li>Capital-loss: [0.0, 4356.0];</li>
-<li>Hours-per-week: [1.0, 99.0];</li>
-<li>Native-country: {United-States, Cambodia, England, Puerto-Rico, Canada, Germany, Outlying-US(Guam-USVI-etc), India, Japan, Greece, South, China, Cuba, Iran, Honduras, Philippines, Italy, Poland, Jamaica, Vietnam, Mexico, Portugal, Ireland, France, Dominican-Republic, Laos, Ecuador, Taiwan, Haiti, Columbia, Hungary, Guatemala, Nicaragua, Scotland, Thailand, Yugoslavia, El-Salvador, Trinadad&amp;Tobago, Peru, Hong, Holand-Netherlands}.</li>
+<li>Capital.gain: [0.0, 99999.0];</li>
+<li>Capital.loss: [0.0, 4356.0];</li>
+<li>Hours.per.week: [1.0, 99.0];</li>
+<li>Native.country: {United-States, Cambodia, England, Puerto-Rico, Canada, Germany, Outlying-US(Guam-USVI-etc), India, Japan, Greece, South, China, Cuba, Iran, Honduras, Philippines, Italy, Poland, Jamaica, Vietnam, Mexico, Portugal, Ireland, France, Dominican-Republic, Laos, Ecuador, Taiwan, Haiti, Columbia, Hungary, Guatemala, Nicaragua, Scotland, Thailand, Yugoslavia, El-Salvador, Trinadad&amp;Tobago, Peru, Hong, Holand-Netherlands}.</li>
 </ol>
 <p><strong>Zmienna wyjściowa (zależna):</strong></p>
 <ol style="list-style-type: decimal">
 <li>SalaryClass: {&gt;50K, &lt;=50K}.</li>
 </ol>
 </div>
-<div id="cel-zadania" class="section level4">
-<h4>1.4 Cel zadania</h4>
+<div id="cel-zadania" class="section level3">
+<h3>4. Cel zadania</h3>
 <p><strong>Zadanie polega na przewidywaniu, czy dochód obywatela przekracza pięćdziesiąt tysięcy dolarów rocznie.</strong></p>
 </div>
 </div>
-<div id="przygotowanie-zbioru-danych" class="section level3">
-<h3>2. Przygotowanie zbioru danych</h3>
+<div id="ii.-przygotowanie-zbioru-danych" class="section level2">
+<h2>II. Przygotowanie zbioru danych</h2>
+<div id="wczytanie-zbioru-danych" class="section level3">
+<h3>1. Wczytanie zbioru danych</h3>
 <pre class="r"><code>adult &lt;- read.csv2('adult.csv', header = TRUE, sep = &quot;;&quot;)</code></pre>
 <p>Prezentacja struktury zbioru danych</p>
 <pre class="r"><code>str(adult)</code></pre>
@@ -241,6 +248,116 @@ $(document).ready(function () {
 ##  Germany      :  206                
 ##  Puerto-Rico  :  184                
 ##  (Other)      : 2517</code></pre>
+</div>
+<div id="uzupenienie-brakujacych-wartosci" class="section level3">
+<h3>2. Uzupełnienie brakujących wartości</h3>
+<p>Zmienne <strong>Occupation</strong>, <strong>Workclass</strong> oraz <strong>Native-country</strong>, zawierają braki danych.</p>
+<pre class="r"><code>table(adult$Workclass)</code></pre>
+<pre><code>## 
+##                ?      Federal-gov        Local-gov     Never-worked 
+##             2799             1432             3136               10 
+##          Private     Self-emp-inc Self-emp-not-inc        State-gov 
+##            33906             1695             3862             1981 
+##      Without-pay 
+##               21</code></pre>
+<pre class="r"><code>table(adult$Occupation)</code></pre>
+<pre><code>## 
+##                 ?      Adm-clerical      Armed-Forces      Craft-repair 
+##              2809              5611                15              6112 
+##   Exec-managerial   Farming-fishing Handlers-cleaners Machine-op-inspct 
+##              6086              1490              2072              3022 
+##     Other-service   Priv-house-serv    Prof-specialty   Protective-serv 
+##              4923               242              6172               983 
+##             Sales      Tech-support  Transport-moving 
+##              5504              1446              2355</code></pre>
+<pre class="r"><code>table(adult$Native.country)</code></pre>
+<pre><code>## 
+##                          ?                   Cambodia 
+##                        857                         28 
+##                     Canada                      China 
+##                        182                        122 
+##                   Columbia                       Cuba 
+##                         85                        138 
+##         Dominican-Republic                    Ecuador 
+##                        103                         45 
+##                El-Salvador                    England 
+##                        155                        127 
+##                     France                    Germany 
+##                         38                        206 
+##                     Greece                  Guatemala 
+##                         49                         88 
+##                      Haiti         Holand-Netherlands 
+##                         75                          1 
+##                   Honduras                       Hong 
+##                         20                         30 
+##                    Hungary                      India 
+##                         19                        151 
+##                       Iran                    Ireland 
+##                         59                         37 
+##                      Italy                    Jamaica 
+##                        105                        106 
+##                      Japan                       Laos 
+##                         92                         23 
+##                     Mexico                  Nicaragua 
+##                        951                         49 
+## Outlying-US(Guam-USVI-etc)                       Peru 
+##                         23                         46 
+##                Philippines                     Poland 
+##                        295                         87 
+##                   Portugal                Puerto-Rico 
+##                         67                        184 
+##                   Scotland                      South 
+##                         21                        115 
+##                     Taiwan                   Thailand 
+##                         65                         30 
+##            Trinadad&amp;Tobago              United-States 
+##                         27                      43832 
+##                    Vietnam                 Yugoslavia 
+##                         86                         23</code></pre>
+<p>Konwersja znakóW “<strong>?</strong>” na “<strong>NA</strong>”.</p>
+<pre class="r"><code>adult[adult == &quot;?&quot;] &lt;- NA
+head(is.na(adult), 5)</code></pre>
+<pre><code>##        Age Workclass Fnlwgt Education Education.num Marital.status
+## [1,] FALSE     FALSE  FALSE     FALSE         FALSE          FALSE
+## [2,] FALSE     FALSE  FALSE     FALSE         FALSE          FALSE
+## [3,] FALSE     FALSE  FALSE     FALSE         FALSE          FALSE
+## [4,] FALSE     FALSE  FALSE     FALSE         FALSE          FALSE
+## [5,] FALSE      TRUE  FALSE     FALSE         FALSE          FALSE
+##      Occupation Relationship  Race   Sex Capital.gain Capital.loss
+## [1,]      FALSE        FALSE FALSE FALSE        FALSE        FALSE
+## [2,]      FALSE        FALSE FALSE FALSE        FALSE        FALSE
+## [3,]      FALSE        FALSE FALSE FALSE        FALSE        FALSE
+## [4,]      FALSE        FALSE FALSE FALSE        FALSE        FALSE
+## [5,]       TRUE        FALSE FALSE FALSE        FALSE        FALSE
+##      Hours.per.week Native.country SalaryClass
+## [1,]          FALSE          FALSE       FALSE
+## [2,]          FALSE          FALSE       FALSE
+## [3,]          FALSE          FALSE       FALSE
+## [4,]          FALSE          FALSE       FALSE
+## [5,]          FALSE          FALSE       FALSE</code></pre>
+</div>
+<div id="podzia-zbioru-na-podzbiory---60-20-20" class="section level3">
+<h3>3. Podział zbioru na podzbiory - 60, 20, 20</h3>
+<p>Zbiór <strong>Adult</strong> został podzielony na podziory:</p>
+<ul>
+<li><strong>adult_train</strong> - zbiór treningowy (uczący) zawierający 60% wszystkich prób</li>
+<li><strong>adult_test</strong> - zbiór testowy zawierający 20% wszystkich prób</li>
+<li><strong>adult_ver</strong> - zbiór do weryfikacji zawierający 20% wszystkich prób</li>
+</ul>
+<pre class="r"><code>library(caTools)
+split &lt;- sample.split(adult, SplitRatio = 0.6)
+split</code></pre>
+<pre><code>##  [1] FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE FALSE  TRUE  TRUE  TRUE
+## [12] FALSE FALSE  TRUE  TRUE</code></pre>
+<pre class="r"><code>adult_train &lt;- subset(adult, split == TRUE)
+adult_tmp &lt;- subset(adult, split == FALSE)
+split &lt;- sample.split(adult_tmp, SplitRatio = 0.5)
+split</code></pre>
+<pre><code>##  [1]  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE  TRUE FALSE  TRUE  TRUE
+## [12] FALSE FALSE  TRUE FALSE</code></pre>
+<pre class="r"><code>adult_test &lt;- subset(adult_tmp, split == TRUE)
+adult_ver &lt;- subset(adult_tmp, split == FALSE)</code></pre>
+</div>
 </div>
 <div id="including-plots" class="section level2">
 <h2>Including Plots</h2>
